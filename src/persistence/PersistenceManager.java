@@ -47,19 +47,30 @@ public class PersistenceManager {
 
     public ArrayList<Actor> getActor(){
         String query = "SELECT * FROM sakila.actor";
+        ArrayList<Actor> result = new ArrayList<>();
         try {
                 Connection connection = getConnection();
                 Statement st = connection.createStatement();
                 ResultSet rs = st.executeQuery(query);
                 while (rs.next()) {
+
+                    Actor actor = new Actor();
+                        actor.setActor_id(rs.getInt("actor_id"));
+                        actor.setFirst_name(rs.getString("first_name"));
+                        actor.setLast_name(rs.getString("last_name"));
+                        actor.setTimestamp(rs.getTimestamp("last_update"));
+
+                    result.add(actor);
                     // Aquí obtiene los datos de la tabla
                 }
                 rs.close();
                 st.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                return result;
             }
+        return result;
+
     }
 
 
