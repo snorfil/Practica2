@@ -59,7 +59,6 @@ public class PersistenceManager {
                         actor.setFirst_name(rs.getString("first_name"));
                         actor.setLast_name(rs.getString("last_name"));
                         actor.setTimestamp(rs.getTimestamp("last_update"));
-
                     result.add(actor);
                     // Aquí obtiene los datos de la tabla
                 }
