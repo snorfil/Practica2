@@ -1,8 +1,9 @@
 package persistence;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import datamodel.Actor;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class PersistenceManager {
 
@@ -38,11 +39,28 @@ public class PersistenceManager {
     }
 
 
-    public Connection getConnection(String dbUrl,String user, String password) throws SQLException{
-        Connection connection = DriverManager.getConnection(dbUrl,user,password);
+    public Connection getConnection() throws SQLException{
+        Connection connection = DriverManager.getConnection(url,user,pass);
         connection.setAutoCommit(true);
         return connection;
     }
-    
+
+    public ArrayList<Actor> getActor(){
+        String query = "SELECT * FROM sakila.actor";
+        try {
+                Connection connection = getConnection();
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                while (rs.next()) {
+                    // Aquí obtiene los datos de la tabla
+                }
+                rs.close();
+                st.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
+
 
 }
